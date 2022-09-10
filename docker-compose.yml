@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass redispass
+    volumes:
+      - cache:/data
+  api:
+    container_name: cryptotao-api
+    build:
+      context: ./
+      target: production
+    image: cryptotao-api
+    command: ['sh', '-c', 'npm run start']
+    depends_on:
+      - cache
+    ports:
+      - 3000:3000
+    environment:
+      NODE_ENV: production
+      REDIS_HOST: cache
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: redispass
+    links:
+      - cache
+    volumes:
+      - ./:/src
+volumes:
+  cache:
+    driver: local

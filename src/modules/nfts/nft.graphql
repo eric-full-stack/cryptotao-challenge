@@ -1,0 +1,29 @@
+type Query {
+  nfts(wallet: String): [NFT]
+}
+
+type NFT {
+  mint: String
+  updateAuthority: String
+  data: DataNFT
+  key: Int
+  primarySaleHappened: Boolean
+  isMutable: Boolean
+  editionNonce: Int
+  masterEdition: String!
+  edition: String!
+}
+
+type DataNFT {
+  creators: [Creator]
+  name: String
+  symbol: String
+  uri: String
+  sellerFeeBasisPoints: Int
+}
+
+type Creator {
+  address: String
+  verified: Int
+  share: Int
+}

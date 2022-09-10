@@ -1,6 +1,6 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
-import { AppModule } from './../src/app.module';
+import { AppModule } from '../src/shared/app.module';
 import { INestApplication } from '@nestjs/common';
 
 describe('AppController (e2e)', () => {
@@ -15,10 +15,10 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('/nfts/hello-world (GET)', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .get('/nfts/hello-world')
       .expect(200)
-      .expect('Hello World!');
+      .expect('Hello :) CryptoTAO');
   });
 });
